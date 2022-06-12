@@ -40,8 +40,6 @@ while True:
         #change to grayscale
         face_grayscale = cv2.cvtColor(the_face, cv2.COLOR_BGR2GRAY)
 
-        
-        
 
         # minNeighbors is used because smiles are hard to distinguish if there are more constant smiles in one area then the chances of the smile being real is high so the last two arguments are used. And scale factor means to blur the image but not too much where is unrecognizable but enough where only the prominent features are clear
         smiles = smile_detector.detectMultiScale(
@@ -49,6 +47,10 @@ while True:
         for (x_, y_, w_, h_) in smiles:
             cv2.rectangle(the_face,  (x_, y_), (x_+w_, y_+h_),(0, 0, 255), 2)  
     
+        #label this face as smiling
+        if len(smiles) > 0:
+            cv2.putText(frame, 'smiling', (x,y+h+40), fontScale=3, fontFace=cv2.FONT_HERSHEY_PLAIN, color=(255,255,255))
+
     cv2.imshow("Smile Detector", frame)
 
     # In python this command is used to keep the window open until a key is pressed to clear it otherwise the window quickly shows up and closes, it is hard to notice.
